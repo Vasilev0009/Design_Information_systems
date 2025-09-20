@@ -6,7 +6,7 @@
 
     <groupId>org.URFU.RIV-420906U</groupId>
     <artifactId>Design_Information_systems</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
