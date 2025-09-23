@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class ConsolePrinter {
     public static void printArray(String message, double[] array) {
-        String value = "";
+        String value; // Будет хранить значение(-я)
 
         // Проверяем, что массив не null
         if (array == null) {
@@ -15,8 +15,8 @@ public class ConsolePrinter {
         if (array.length == 0) {
             value = "Массив пуст";
         }
-        else value = Arrays.toString(array);
+        else value = Arrays.toString(array); // В ином случае заполняем переменную value значениями из массива
 
-        System.out.println(message + " " + value);
+        System.out.println(message + " " + value); // Выводим в консоль
     }
 }
