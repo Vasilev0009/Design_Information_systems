@@ -3,11 +3,14 @@ package lab_2.model;
 public class ModelLab2 {
 
     int numberOfBugDetected;//число обнаруженных ошибок
-    double [] bugTime; //Массив интервалов времени появления ошибок.
+    double[] bugTime; //Массив интервалов времени появления ошибок.
     int numberBug; //Общее число ошибок в программе.
     double propCoeff;//коэффициент пропорциональности
     double averageTimeToBug; //среднее время до появления ошибки
     double timeEndTesting;//время до окончания тестирования
+
+    public ModelLab2() {
+    }
 
     public int getNumberBug() {
         return numberBug;
@@ -48,4 +51,47 @@ public class ModelLab2 {
     public void setAverageTimeToBug(double averageTimeToBug) {
         this.averageTimeToBug = averageTimeToBug;
     }
+
+    public int getN() {
+        return 0;
+    }
+
+    public void setXi(double[] clone) {
+    }
+
+    public void setN(int length) {
+    }
+
+    public void setB(double v) {
+    }
+
+    public int getB() {
+        return 0;
+    }
+
+    public double[] getXi() {
+        return new double[0];
+    }
+
+    public void setK(double v) {
+    }
+
+    public double getK() {
+        return 0;
+    }
+
+    public void setXNext(double xNext) {
+    }
+
+    public void setTEnd(double sum) {
+    }
+
+    public Object getXNext() {
+        return null;
+    }
+
+    public Object getTEnd() {
+        return null;
+    }
 }
+
