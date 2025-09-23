@@ -16,6 +16,9 @@ public class Lab2Runner {
         FileService.readDataFromFile("tableBugTime.txt", model);
         ConsolePrinter.printArray("Данные из файла:", model.getBugTime());
 
+        // Получение числа найденных ошибок
+        model.setNumberOfBugDetected(model.getBugTime().length) ;
+
         // Получение данных от пользователя
         double[] userData = InputService.getUserInput();
         ConsolePrinter.printArray("Данные от пользователя:", userData);
