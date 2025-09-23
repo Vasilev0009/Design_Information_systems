@@ -1,26 +1,20 @@
 package lab_2.service;
-
 import lab_2.model.ModelLab2;
-
 import java.io.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+
 
 //Класс для чтения информации из файла
 public class FileService {
 
     //Метод чтения из файла
     public static ModelLab2 readDataFromFile(String filename, ModelLab2 model) {
-        List<Double> dataList = new ArrayList<>();
-
         try {
             // Получаем InputStream из ресурсов
             InputStream inputStream = FileService.class.getClassLoader().getResourceAsStream(filename);
 
+            // Проверяем не пуст ли файл
             if (inputStream == null) {
                 throw new IllegalArgumentException("Файл не найден: " + filename);
             }
@@ -28,12 +22,13 @@ public class FileService {
             // Создаем BufferedReader для чтения
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String content = reader.readLine();
-            reader.close();
+            String content = reader.readLine(); // Читаем строку с данными
+            reader.close(); // Закрываем буфер чтения
 
-            String[] numberStrings = content.trim().split("\\s+");
-            double[] numbers = new double[numberStrings.length];
+            String[] numberStrings = content.trim().split("\\s+"); // Разбиваем строку на массив строк (разбиваем по пробелу)
+            double[] numbers = new double[numberStrings.length]; // Создаём массив типа double длиной, равной длине массива строк
 
+            // Заполняем массив double данными из массива строк, преобразуя данные
             for (int i = 0; i < numberStrings.length; i++) {
                 numbers[i] = Double.parseDouble(numberStrings[i]);
             }
