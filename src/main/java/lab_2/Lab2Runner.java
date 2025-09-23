@@ -20,7 +20,7 @@ public class Lab2Runner {
         model.setNumberOfBugDetected(model.getBugTime().length) ;
 
         // Получение данных от пользователя
-        double[] userData = InputService.getUserInput();
+        double[] userData = InputService.getUserInput(model);
         ConsolePrinter.printArray("Данные от пользователя:", userData);
 
         // Вычисляем общее число багов в программе
