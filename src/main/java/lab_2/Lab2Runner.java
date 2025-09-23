@@ -16,17 +16,17 @@ public class Lab2Runner {
 
 
 
-        // Шаг 1: Оценка общего числа ошибок B
+
+// Шаг 1: Оценка общего числа ошибок B
         model = MathService.BugCalc(model, Xi);
+        System.out.println("После BugCalc: K = " + model.getK() + ", B = " + model.getB() + ", n = " + model.getN());
 
-        // Шаг 2: Оценка коэффициента K
+// Шаг 2: Оценка коэффициента K
         model = MathService.PropCoeffCalc(model);
+        System.out.println("После PropCoeffCalc: K = " + model.getK() + ", B = " + model.getB() + ", n = " + model.getN());
 
-        // Шаг 3: Время до следующей ошибки X_{n+1}
+// Шаг 3: Время до следующей ошибки
         model = MathService.AverageBugTimeCalc(model);
-
-        // Шаг 4: Время до окончания тестирования T
-        model = MathService.TestingEndTimeCalc(model);
 
         // ВЫВОД РЕЗУЛЬТАТОВ
         System.out.printf("Обнаружено ошибок (n): %d%n", model.getN());
