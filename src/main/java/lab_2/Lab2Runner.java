@@ -10,7 +10,7 @@ import util.ConsolePrinter;
 public class Lab2Runner {
     public static void runner() {
         ModelLab2 model = new ModelLab2();
-        System.out.println("=== Лабораторная работа 1 ===");
+        System.out.println("=== Лабораторная работа 2 ===");
 
         // Получение данных из файла
         FileService.readDataFromFile("tableBugTime.txt", model);
