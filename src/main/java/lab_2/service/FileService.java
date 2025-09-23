@@ -42,7 +42,6 @@ public class FileService {
             System.err.println("Ошибка преобразования числа: " + e.getMessage());
             model.setBugTime(new double[0]); // Возвращаем пустой массив в случае ошибки
         }
-
         return model;
     }
 }
