@@ -1,7 +1,10 @@
 package lab_2;
 
 import lab_2.model.ModelLab2;
+import lab_2.service.FileService;
+import lab_2.service.InputService;
 import lab_2.service.MathService;
+import util.ConsolePrinter;
 
 //Клас который запускает выполнения Lab2
 public class Lab2Runner {
@@ -9,34 +12,32 @@ public class Lab2Runner {
         ModelLab2 model = new ModelLab2();
         System.out.println("=== Лабораторная работа 2 ===");
 
-        // ДАННЫЕ ДЛЯ ВАРИАНТА 1 — 26 ошибок
-        double[] Xi = {
-                9, 12, 11, 4, 7, 2, 5, 8, 5, 7, 1, 6, 1, 9, 4, 1, 3, 3, 6, 1, 11, 33, 7, 91, 2, 1
-        };
+        // Получение данных из файла
+        FileService.readDataFromFile("tableBugTime.txt", model);
+        ConsolePrinter.printArray("Данные из файла:", model.getBugTime());
 
+        // Получение числа найденных ошибок
+        model.setNumberOfBugDetected(model.getBugTime().length) ;
 
+        // Получение данных от пользователя
+        double[] userData = InputService.getUserInput(model);
+        ConsolePrinter.printArray("Данные от пользователя:", userData);
 
-        // Шаг 1: Оценка общего числа ошибок B
-        model = MathService.BugCalc(model, Xi);
+        // Вычисляем общее число багов в программе
+        MathService.BugCalc(model, userData);
+        System.out.println("Общее число багов в программе B = " + model.getNumberBug());
 
-        // Шаг 2: Оценка коэффициента K
-        model = MathService.PropCoeffCalc(model);
+        //Вычисляем коэффициент пропорциональности
+        MathService.PropCoeffCalc(model);
+        System.out.println("Коэффициент пропорциональности K = " + model.getPropCoeff());
+        //System.out.println("Время до начала тестирования = " + model.getPropCoeff());
 
-        // Шаг 3: Время до следующей ошибки X_{n+1}
-        model = MathService.AverageBugTimeCalc(model);
+        //Вычисляем среднее время до появления ошибки
+        MathService.AverageBugTimeCalc(model);
+        System.out.println("Среднее время до появления ошибки X(n+1) = " + model.getAverageTimeToBug());
 
-        // Шаг 4: Время до окончания тестирования T
-        model = MathService.TestingEndTimeCalc(model);
-
-        // ВЫВОД РЕЗУЛЬТАТОВ
-        System.out.printf("Обнаружено ошибок (n): %d%n", model.getN());
-        System.out.printf("Оценка общего числа ошибок (B): %.6f%n", model.getB());
-        System.out.printf("Коэффициент пропорциональности (K): %.10f%n", model.getK());
-        System.out.printf("Время до следующей ошибки (X_{n+1}): %.4f часов%n", model.getXNext());
-        System.out.printf("Время до окончания тестирования (T): %.2f часов%n", model.getTEnd());
-
-        System.out.println("\n=== РАСЧЁТЫ ЗАВЕРШЕНЫ ===");
+        //Вычисляем время до окончания тестирования
+        MathService.TestingEndTimeCalc(model);
+        System.out.println("Время до окончания тестирования t(k) = " + model.getTimeEndTesting());
     }
 }
-
-

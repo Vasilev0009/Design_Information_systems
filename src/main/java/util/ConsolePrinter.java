@@ -1,7 +1,7 @@
 package util;
 
 import java.util.Arrays;
-
+//Класс для вывода в консоль
 public class ConsolePrinter {
     public static void printArray(String message, double[] array) {
         String value; // Будет хранить значение(-я)

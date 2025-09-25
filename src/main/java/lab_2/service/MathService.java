@@ -2,150 +2,129 @@ package lab_2.service;
 
 import lab_2.model.ModelLab2;
 
+//Класс для математических вычислений
 public class MathService {
-    private static final double TOLERANCE = 1e-10;
-    private static final double B_MIN = 1.1;  // Минимальное B (должно быть > n)
-    private static final double B_MAX = 10000.0; // Максимальное B для поиска
+    public static void BugCalc(ModelLab2 model, double[] userData) {
+        /*
+         * Рассчитывает оценку общего числа ошибок B методом бисекции.
+         * Уравнение: Σ(1 / (B - i + 1)) = Σ(Xi) / Σ(i * Xi)
+         */
+        double a = userData[0]; // нижняя граница
+        double b = userData[1]; // верхняя граница
+        double epsilon = userData[2]; // точность
+        double c = 0;
 
-    /**
-     * Рассчитывает оценку общего числа ошибок B методом бисекции.
-     * Уравнение: Σ(1 / (B - i + 1)) = Σ(Xi) / Σ(i * Xi)
-     *
-     * @param model исходная модель с заполненными xi и n
-     * @return новая модель с установленным значением b
-     */
-    public static ModelLab2 BugCalc(ModelLab2 model, double[] userData) {
-        if (userData == null || userData.length == 0) {
-            throw new IllegalArgumentException("Данные Xi не могут быть пустыми");
+        double sumXi = 0;
+        double sumiXi = 0;
+        int n = model.getNumberOfBugDetected();
+
+        // Вычисляем суммы
+        for (int i = 0; i < n; i++) {
+            sumiXi += model.getBugTime()[i] * (i + 1);
+            sumXi += model.getBugTime()[i];
         }
+        // Проверка существования корня на интервале
 
-        // Копируем данные из userData в модель (если модель ещё не заполнена)
-        ModelLab2 updatedModel = new ModelLab2();
-        updatedModel.setXi(userData.clone());
-        updatedModel.setN(userData.length);
 
-        double sumXi = 0.0;
-        double sumIXi = 0.0;
+        System.out.println("| Iter |     a     |     c     |     b     |   f(a)    |   f(c)    |   f(b)    |  b - a    |");
 
-        for (int i = 1; i <= updatedModel.getN(); i++) {
-            sumXi += userData[i - 1];
-            sumIXi += i * userData[i - 1];
-        }
+        int iteration = 0;
+        while (Math.abs(b - a) > epsilon) {
+            iteration++;
+            c = (a + b) / 2;
 
-        if (sumIXi == 0) {
-            throw new ArithmeticException("Сумма i * Xi равна нулю — некорректные данные");
-        }
 
-        double rhs = sumXi / sumIXi; // правая часть уравнения
 
-        // Метод бисекции для поиска B
-        double left = updatedModel.getN() + 0.1; // B > n
-        double right = B_MAX;
+            double fa = calculateFunction(sumXi, sumiXi, n, a);
+            double fb = calculateFunction(sumXi, sumiXi, n, b);
+            if (fa * fb > 0) {
+                throw new IllegalArgumentException("На заданном интервале нет корня или их четное количество");}
+            double fc = calculateFunction(sumXi, sumiXi, n, c);
 
-        while (right - left > TOLERANCE) {
-            double mid = (left + right) / 2.0;
-            double fMid = calculateFunctionB(mid, updatedModel.getN(), userData);
+            // Форматированный вывод
+            String str = String.format("| %4d | %9.6f | %9.6f | %9.6f | %9.6f | %9.6f | %9.6f | %9.6f |",
+                    iteration, a, c, b, fa, fc, fb, b - a);
+            System.out.println(str);
 
-            if (Math.abs(fMid) < TOLERANCE) {
+            // Правильная логика бисекции
+            if (fa * fc < 0) {
+                b = c; // корень в левой половине
+            } else if (fb * fc < 0) {
+                a = c; // корень в правой половине
+            } else {
+                // f(c) = 0 или особый случай
                 break;
             }
-
-            if (fMid > 0) {
-                left = mid;
-            } else {
-                right = mid;
-            }
         }
 
-        updatedModel.setB((left + right) / 2.0);
-        return updatedModel;
+        System.out.println("Величина B равна: " + c);
+        int roundedCeil = (int) Math.ceil(c);
+        System.out.println("Округленное значение B: " + roundedCeil);
+        model.setNumberBug(roundedCeil);
+    }
+    //Метод для подсчета итераций методом бисекций
+    private static double calculateFunction(double sumXi, double sumiXi, int n, double point) {
+        double left = 0;
+
+        // Левая часть уравнения: Σ(1 / (B - i + 1))
+        for (int i = 0; i < n; i++) {
+            left += 1.0 / (point - i);
+        }
+
+        // Правая часть уравнения: n * Σ(Xi) / ((B + 1) * Σ(Xi) - Σ(i * Xi))
+        double right = n * sumXi / ((point + 1) * sumXi - sumiXi);
+
+        return left - right; // f(B) = left - right = 0
     }
 
-    /**
-     * Вычисляет функцию F(B) = Σ(1/(B - i + 1)) - Σ(Xi)/Σ(i * Xi)
-     * Нужно найти B, при котором F(B) = 0
-     */
-    private static double calculateFunctionB(double B, int n, double[] xi) {
-        double sumInv = 0.0;
-        for (int i = 1; i <= n; i++) {
-            sumInv += 1.0 / (B - i + 1);
-        }
-        double sumXi = 0.0, sumIXi = 0.0;
-        for (int i = 1; i <= n; i++) {
-            sumXi += xi[i - 1];
-            sumIXi += i * xi[i - 1];
-        }
-        double rhs = sumXi / sumIXi;
-        return sumInv - rhs;
-    }
-
-    /**
-     * Рассчитывает коэффициент пропорциональности K по формуле:
-     * K = n / Σ[(B - i + 1) * Xi]
-     *
-     * @param model модель с уже рассчитанным B
-     * @return новая модель с установленным значением k
-     */
-    public static ModelLab2 PropCoeffCalc(ModelLab2 model) {
-        if (model.getB() <= model.getN()) {
-            throw new IllegalStateException("Значение B должно быть больше числа обнаруженных ошибок (n)");
-        }
-
+    //Метод вычисляющий Коэффициенты пропорциональности
+    public static void PropCoeffCalc(ModelLab2 model){
+        // Рассчитывает коэффициент пропорциональности K по формуле:
+        // K = n / Σ[(B - i + 1) * Xi]
+        // int B = model.getNumberBug();
         double sum = 0.0;
-        for (int i = 1; i <= model.getN(); i++) {
-            sum += (model.getB() - i + 1) * model.getXi()[i - 1];
+        if (model.getNumberBug() <= model.getNumberOfBugDetected()) {
+            throw new IllegalStateException("Значение B должно быть больше числа обнаруженных ошибок (n)");
+            }
+
+
+        for (int i = 1; i <= model.getNumberOfBugDetected(); i++) {
+            sum += (model.getNumberBug()  - i + 1) * model.getBugTime()[i - 1];
         }
 
         if (sum == 0) {
             throw new ArithmeticException("Сумма (B - i + 1) * Xi равна нулю — невозможно вычислить K");
         }
 
-        ModelLab2 updatedModel = new ModelLab2(); // конструктор копирования
-        updatedModel.setK(model.getN() / sum);
-        return updatedModel;
+        model.setPropCoeff(model.getNumberOfBugDetected()/sum);
+
     }
 
-    /**
-     * Рассчитывает среднее время до появления (n+1)-й ошибки:
-     * X_{n+1} = 1 / [K * (B - n)]
-     *
-     * @param model модель с уже рассчитанными B и K
-     * @return новая модель с установленным значением xNext
-     */
-    public static ModelLab2 AverageBugTimeCalc(ModelLab2 model) {
-        if (model.getK() <= 0 || model.getB() <= model.getN()) {
-            throw new IllegalStateException("K должен быть положительным, B > n");
-        }
-
-        double xNext = 1.0 / (model.getK() * (model.getB() - model.getN()));
-
-        ModelLab2 updatedModel = new ModelLab2();
-        updatedModel.setXNext(xNext);
-        return updatedModel;
-    }
-
-    /**
-     * Рассчитывает время до окончания тестирования:
-     * T = Σ_{i=1}^{B} 1/(K * i)
-     * B округляется до ближайшего целого
-     *
-     * @param model модель с уже рассчитанным K
-     * @return новая модель с установленным значением tEnd
-     */
-    public static ModelLab2 TestingEndTimeCalc(ModelLab2 model) {
-        if (model.getK() <= 0) {
+    //Метод вычисляющий среднее время до появления ошибки
+    public static void AverageBugTimeCalc(ModelLab2 model) {
+        /*
+         * Рассчитывает среднее время до появления (n+1)-й ошибки:
+         * X_{n+1} = 1 / [K * (B - n)]
+         *
+         */
+        if (model.getPropCoeff() <= 0) {
             throw new IllegalStateException("K должен быть положительным");
         }
 
-        int B = (int) Math.round(model.getB());
-        double sum = 0.0;
-        for (int i = 1; i <= B; i++) {
-            sum += 1.0 / (model.getK() * i);
-        }
+        double xNext = 1.0 / (model.getPropCoeff() * (model.getNumberBug() - model.getNumberOfBugDetected()));
 
-        ModelLab2 updatedModel = new ModelLab2();
-        updatedModel.setTEnd(sum);
-        return updatedModel;
+        model.setAverageTimeToBug(xNext);
+    }
+    /**
+     * Рассчитывает время до окончания тестирования:
+     * T = 1/K + Σ_{i=1}^{B-n} 1/i
+     */
+    public static void TestingEndTimeCalc(ModelLab2 model) {
+
+        double sum = 0.0;
+        for (int i = 1; i <= model.getNumberBug() - model.getNumberOfBugDetected(); i++) {
+            sum += 1.0 / i;
+        }
+        model.setTimeEndTesting(1 / model.getPropCoeff() * sum);
     }
 }
-

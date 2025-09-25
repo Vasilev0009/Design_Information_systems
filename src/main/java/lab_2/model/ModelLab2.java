@@ -16,6 +16,14 @@ public class ModelLab2 {
         return numberBug;
     }
 
+    public void setTimeEndTesting(double timeEndTesting) {
+        this.timeEndTesting = timeEndTesting;
+    }
+
+    public void setNumberBug(int numberBug) {
+        this.numberBug = numberBug;
+    }
+
     public double getTimeEndTesting() {
         return timeEndTesting;
     }
