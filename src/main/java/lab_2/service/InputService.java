@@ -6,15 +6,14 @@ import java.util.Scanner;
 
 //Класс для получения ввода от пользователя
 public class InputService {
-    public static double[] getUserInput(ModelLab2 model){
-        double[] userData = new double [3];
+    public static void getUserInput(ModelLab2 model){
         Scanner in = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
             try {
                 System.out.print("Введите верхнюю границу интервала: ");
-                userData [0] = Integer.parseInt(in.nextLine());
-                if (userData [0] <= model.getNumberOfBugDetected()){
+                model.setUpperPointer(Integer.parseInt(in.nextLine()));
+                if (model.getUpperPointer() <= model.getNumberOfBugDetected()){
                     System.out.println("Ошибка! Верхняя граница должна быть больше: " + model.getNumberOfBugDetected() );
                     continue;
                 }
@@ -23,17 +22,17 @@ public class InputService {
                 System.out.println("Ошибка! Введите корректное число.");
             }
         }
-        userData [1] = model.getNumberOfBugDetected();
-        userData [2] = 1;
-        System.out.println ("По умолчанию нижняя граница равна: " + userData [1] + " Погрешность :" + userData [2]);
+        model.setLowerPointer(model.getNumberOfBugDetected());
+        model.setEpsilon(0.001);
+        System.out.println ("По умолчанию нижняя граница равна: " + model.getLowerPointer() + " Погрешность: " + model.getEpsilon());
         System.out.println ("Хотите ввести нижнюю границу и значение погрешности в ручную?");
         System.out.print ("Введите Yes или No: ");
         while (validInput) {
-                String choice;// = new String("");
+                String choice;
                 choice = in.nextLine().trim();
 
                 if (choice.equalsIgnoreCase("yes")) {
-                    getUserData(userData);
+                    getUserData(model);
                     validInput = false;
                 }
 
@@ -46,21 +45,20 @@ public class InputService {
 
             }
         in.close();
-        return userData;
-        }
-    public static void getUserData(double [] userData){
+    }
+    public static void getUserData(ModelLab2 model){
         Scanner in = new Scanner(System.in);
-        double lowerBordInterval = userData [1];
+        double lowerBordInterval = model.getLowerPointer();
         boolean validInput = false;
 
         while (!validInput) {
             try {
 
                 System.out.print("Введите нижнюю границу интервала: ");
-                userData [1] = Integer.parseInt(in.nextLine());
-                if (userData [1] <= lowerBordInterval || userData[1] >= userData[0]){
+                model.setLowerPointer(Integer.parseInt(in.nextLine()));
+                if (model.getLowerPointer() < lowerBordInterval || model.getLowerPointer() >= model.getUpperPointer()){
                     System.out.println("Ошибка! Нижняя граница должна быть больше: " + lowerBordInterval +
-                            "и меньше: " + userData[0] );
+                            " и меньше: " + model.getUpperPointer() );
                     continue;
                 }
                 validInput =  true;
@@ -71,7 +69,7 @@ public class InputService {
         while (validInput) {
             try {
                 System.out.print("Введите желаемую погрешность: ");
-                userData [2] = Double.parseDouble(in.nextLine());
+                model.setEpsilon(Double.parseDouble(in.nextLine()));
                 validInput =  false;
             } catch (NumberFormatException e) {
                 System.out.println("Ошибка! Введите корректное число.");

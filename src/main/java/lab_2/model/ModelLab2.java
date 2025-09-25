@@ -8,6 +8,33 @@ public class ModelLab2 {
     double propCoeff;//коэффициент пропорциональности
     double averageTimeToBug; //среднее время до появления ошибки
     double timeEndTesting;//время до окончания тестирования
+    int LowerPointer; //Нижняя граница
+    int UpperPointer; //Верхняя граница
+    double epsilon; //Погрешность
+
+    public int getLowerPointer() {
+        return LowerPointer;
+    }
+
+    public void setLowerPointer(int lowerPointer) {
+        LowerPointer = lowerPointer;
+    }
+
+    public int getUpperPointer() {
+        return UpperPointer;
+    }
+
+    public void setUpperPointer(int upperPointer) {
+        UpperPointer = upperPointer;
+    }
+
+    public double getEpsilon() {
+        return epsilon;
+    }
+
+    public void setEpsilon(double epsilon) {
+        this.epsilon = epsilon;
+    }
 
     public ModelLab2() {
     }
@@ -59,47 +86,4 @@ public class ModelLab2 {
     public void setAverageTimeToBug(double averageTimeToBug) {
         this.averageTimeToBug = averageTimeToBug;
     }
-
-    public int getN() {
-        return 0;
-    }
-
-    public void setXi(double[] clone) {
-    }
-
-    public void setN(int length) {
-    }
-
-    public void setB(double v) {
-    }
-
-    public int getB() {
-        return 0;
-    }
-
-    public double[] getXi() {
-        return new double[0];
-    }
-
-    public void setK(double v) {
-    }
-
-    public double getK() {
-        return 0;
-    }
-
-    public void setXNext(double xNext) {
-    }
-
-    public void setTEnd(double sum) {
-    }
-
-    public Object getXNext() {
-        return null;
-    }
-
-    public Object getTEnd() {
-        return null;
-    }
 }
-
