@@ -30,7 +30,7 @@ public class Lab2Runner {
         //Вычисляем коэффициент пропорциональности
         MathService.PropCoeffCalc(model);
         System.out.println("Коэффициент пропорциональности K = " + model.getPropCoeff());
-        System.out.println("Время до начала тестирования = " + model.getPropCoeff());
+        //System.out.println("Время до начала тестирования = " + model.getPropCoeff());
 
         //Вычисляем среднее время до появления ошибки
         MathService.AverageBugTimeCalc(model);
