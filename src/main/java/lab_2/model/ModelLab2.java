@@ -21,8 +21,6 @@ public class ModelLab2 {
     public ModelLab2() {
     }
 
-    // ПРАВИЛЬНАЯ РЕАЛИЗАЦИЯ МЕТОДОВ:
-
     public int getN() {
         return this.n;
     }
