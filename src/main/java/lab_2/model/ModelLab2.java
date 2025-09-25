@@ -8,16 +8,16 @@ public class ModelLab2 {
     double propCoeff;//коэффициент пропорциональности
     double averageTimeToBug; //среднее время до появления ошибки
     double timeEndTesting;//время до окончания тестирования
-    int LoverPointer; //Нижняя граница
+    int LowerPointer; //Нижняя граница
     int UpperPointer; //Верхняя граница
     double epsilon; //Погрешность
 
-    public int getLoverPointer() {
-        return LoverPointer;
+    public int getLowerPointer() {
+        return LowerPointer;
     }
 
-    public void setLoverPointer(int loverPointer) {
-        LoverPointer = loverPointer;
+    public void setLowerPointer(int lowerPointer) {
+        LowerPointer = lowerPointer;
     }
 
     public int getUpperPointer() {

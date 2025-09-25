@@ -21,7 +21,7 @@ public class Lab2Runner {
 
         // Получение данных от пользователя
         InputService.getUserInput(model);
-        System.out.println("Данные от пользователя: " + model.getLoverPointer() + ", " + model.getUpperPointer() + ", " + model.getEpsilon());
+        System.out.println("Данные от пользователя: " + model.getLowerPointer() + ", " + model.getUpperPointer() + ", " + model.getEpsilon());
 
         // Вычисляем общее число багов в программе
         MathService.BugCalc(model);

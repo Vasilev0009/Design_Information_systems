@@ -22,9 +22,9 @@ public class InputService {
                 System.out.println("Ошибка! Введите корректное число.");
             }
         }
-        model.setLoverPointer(model.getNumberOfBugDetected());
+        model.setLowerPointer(model.getNumberOfBugDetected());
         model.setEpsilon(0.001);
-        System.out.println ("По умолчанию нижняя граница равна: " + model.getLoverPointer() + " Погрешность: " + model.getEpsilon());
+        System.out.println ("По умолчанию нижняя граница равна: " + model.getLowerPointer() + " Погрешность: " + model.getEpsilon());
         System.out.println ("Хотите ввести нижнюю границу и значение погрешности в ручную?");
         System.out.print ("Введите Yes или No: ");
         while (validInput) {
@@ -48,15 +48,15 @@ public class InputService {
     }
     public static void getUserData(ModelLab2 model){
         Scanner in = new Scanner(System.in);
-        double lowerBordInterval = model.getLoverPointer();
+        double lowerBordInterval = model.getLowerPointer();
         boolean validInput = false;
 
         while (!validInput) {
             try {
 
                 System.out.print("Введите нижнюю границу интервала: ");
-                model.setLoverPointer(Integer.parseInt(in.nextLine()));
-                if (model.getLoverPointer() < lowerBordInterval || model.getLoverPointer() >= model.getUpperPointer()){
+                model.setLowerPointer(Integer.parseInt(in.nextLine()));
+                if (model.getLowerPointer() < lowerBordInterval || model.getLowerPointer() >= model.getUpperPointer()){
                     System.out.println("Ошибка! Нижняя граница должна быть больше: " + lowerBordInterval +
                             " и меньше: " + model.getUpperPointer() );
                     continue;

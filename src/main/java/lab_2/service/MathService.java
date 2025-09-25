@@ -9,7 +9,7 @@ public class MathService {
          * Рассчитывает оценку общего числа ошибок B методом бисекции.
          * Уравнение: Σ(1 / (B - i + 1)) = Σ(Xi) / Σ(i * Xi)
          */
-        double a = model.getLoverPointer(); // нижняя граница
+        double a = model.getLowerPointer(); // нижняя граница
         double b = model.getUpperPointer(); // верхняя граница
         double epsilon = model.getEpsilon(); // точность
         double c = 0;
