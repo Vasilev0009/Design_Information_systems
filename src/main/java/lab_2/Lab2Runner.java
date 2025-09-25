@@ -6,7 +6,7 @@ import lab_2.service.InputService;
 import lab_2.service.MathService;
 import util.ConsolePrinter;
 
-//Клас который запускает выполнения Lab2
+//Класс, который запускает выполнения Lab2
 public class Lab2Runner {
     public static void runner() {
         ModelLab2 model = new ModelLab2();

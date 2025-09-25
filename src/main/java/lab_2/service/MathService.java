@@ -6,16 +6,16 @@ import lab_2.model.ModelLab2;
 public class MathService {
     public static void BugCalc(ModelLab2 model) {
         /*
-         * Рассчитывает оценку общего числа ошибок B методом бисекции.
+         * Рассчитывает оценку общего числа ошибок B методом бисекций.
          * Уравнение: Σ(1 / (B - i + 1)) = Σ(Xi) / Σ(i * Xi)
          */
         double a = model.getLowerPointer(); // нижняя граница
         double b = model.getUpperPointer(); // верхняя граница
         double epsilon = model.getEpsilon(); // точность
         double c = 0;
-
         double sumXi = 0;
         double sumiXi = 0;
+        int iteration = 0;
         int n = model.getNumberOfBugDetected();
 
         // Вычисляем суммы
@@ -23,22 +23,33 @@ public class MathService {
             sumiXi += model.getBugTime()[i] * (i + 1);
             sumXi += model.getBugTime()[i];
         }
-        // Проверка существования корня на интервале
 
+            // ПРОВЕРКА ИНТЕРВАЛА ДО НАЧАЛА ИТЕРАЦИЙ
+            while (true) {
+                double fa = calculateFunction(sumXi, sumiXi, n, a);
+                double fb = calculateFunction(sumXi, sumiXi, n, b);
+                // Проверка существования корня на интервале
+                if (fa * fb > 0) {
+                    System.out.println("На заданном интервале нет корня или их четное количество");
+                    InputService.getUserInput(model);
+                    a = model.getLowerPointer();
+                    b = model.getUpperPointer();
+                    epsilon = model.getEpsilon();
+                    System.out.println("Новые данные: a=" + a + ", b=" + b + ", epsilon=" + epsilon);
+                } else {
+                    break; // Интервал корректен, выходим из проверки
+                }
+            }
 
         System.out.println("| Iter |     a     |     c     |     b     |   f(a)    |   f(c)    |   f(b)    |  b - a    |");
 
-        int iteration = 0;
         while (Math.abs(b - a) > epsilon) {
             iteration++;
             c = (a + b) / 2;
 
-
             // Вычисляем значения ф-ции для заданных B (a, b, c)
             double fa = calculateFunction(sumXi, sumiXi, n, a);
             double fb = calculateFunction(sumXi, sumiXi, n, b);
-            if (fa * fb > 0) {
-                throw new IllegalArgumentException("На заданном интервале нет корня или их четное количество");}
             double fc = calculateFunction(sumXi, sumiXi, n, c);
 
             // Форматированный вывод
@@ -46,7 +57,6 @@ public class MathService {
                     iteration, a, c, b, fa, fc, fb, b - a);
             System.out.println(str);
 
-            // Правильная логика бисекции
             if (fa * fc < 0) {
                 b = c; // корень в левой половине
             } else if (fb * fc < 0) {

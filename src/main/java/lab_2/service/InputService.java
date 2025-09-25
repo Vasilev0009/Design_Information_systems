@@ -1,13 +1,12 @@
 package lab_2.service;
 
 import lab_2.model.ModelLab2;
-
 import java.util.Scanner;
 
 //Класс для получения ввода от пользователя
 public class InputService {
+    static Scanner in = new Scanner(System.in);
     public static void getUserInput(ModelLab2 model){
-        Scanner in = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
             try {
@@ -44,7 +43,6 @@ public class InputService {
                 }
 
             }
-        in.close();
     }
     public static void getUserData(ModelLab2 model){
         Scanner in = new Scanner(System.in);
@@ -75,6 +73,5 @@ public class InputService {
                 System.out.println("Ошибка! Введите корректное число.");
             }
         }
-        in.close();
     }
 }
