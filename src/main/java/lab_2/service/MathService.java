@@ -4,14 +4,14 @@ import lab_2.model.ModelLab2;
 
 //Класс для математических вычислений
 public class MathService {
-    public static void BugCalc(ModelLab2 model, double[] userData) {
+    public static void BugCalc(ModelLab2 model) {
         /*
          * Рассчитывает оценку общего числа ошибок B методом бисекции.
          * Уравнение: Σ(1 / (B - i + 1)) = Σ(Xi) / Σ(i * Xi)
          */
-        double a = userData[0]; // нижняя граница
-        double b = userData[1]; // верхняя граница
-        double epsilon = userData[2]; // точность
+        double a = model.getLoverPointer(); // нижняя граница
+        double b = model.getUpperPointer(); // верхняя граница
+        double epsilon = model.getEpsilon(); // точность
         double c = 0;
 
         double sumXi = 0;
@@ -34,7 +34,7 @@ public class MathService {
             c = (a + b) / 2;
 
 
-
+            // Вычисляем значения ф-ции для заданных B (a, b, c)
             double fa = calculateFunction(sumXi, sumiXi, n, a);
             double fb = calculateFunction(sumXi, sumiXi, n, b);
             if (fa * fb > 0) {
@@ -57,7 +57,7 @@ public class MathService {
             }
         }
 
-        System.out.println("Величина B равна: " + c);
+        System.out.printf("Величина B равна: %.4f%n", c);
         int roundedCeil = (int) Math.ceil(c);
         System.out.println("Округленное значение B: " + roundedCeil);
         model.setNumberBug(roundedCeil);
@@ -115,12 +115,12 @@ public class MathService {
 
         model.setAverageTimeToBug(xNext);
     }
-    /**
-     * Рассчитывает время до окончания тестирования:
-     * T = 1/K + Σ_{i=1}^{B-n} 1/i
-     */
+    //Метод вычисляющий время до окончания тестирования
     public static void TestingEndTimeCalc(ModelLab2 model) {
-
+        /*
+         * Рассчитывает время до окончания тестирования:
+         * T = 1/K + Σ_{i=1}^{B-n} 1/i
+         */
         double sum = 0.0;
         for (int i = 1; i <= model.getNumberBug() - model.getNumberOfBugDetected(); i++) {
             sum += 1.0 / i;
