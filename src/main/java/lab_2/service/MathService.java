@@ -4,8 +4,8 @@ import lab_2.model.ModelLab2;
 
 //Класс для математических вычислений
 public class MathService {
-    public static ModelLab2 BugCalc(ModelLab2 model, double[] userData) {
-        /**
+    public static void BugCalc(ModelLab2 model, double[] userData) {
+        /*
          * Рассчитывает оценку общего числа ошибок B методом бисекции.
          * Уравнение: Σ(1 / (B - i + 1)) = Σ(Xi) / Σ(i * Xi)
          */
@@ -61,7 +61,6 @@ public class MathService {
         int roundedCeil = (int) Math.ceil(c);
         System.out.println("Округленное значение B: " + roundedCeil);
         model.setNumberBug(roundedCeil);
-        return model;
     }
     //Метод для подсчета итераций методом бисекций
     private static double calculateFunction(double sumXi, double sumiXi, int n, double point) {
@@ -102,8 +101,8 @@ public class MathService {
     }
 
     //Метод вычисляющий среднее время до появления ошибки
-    public static ModelLab2 AverageBugTimeCalc(ModelLab2 model) {
-        /**
+    public static void AverageBugTimeCalc(ModelLab2 model) {
+        /*
          * Рассчитывает среднее время до появления (n+1)-й ошибки:
          * X_{n+1} = 1 / [K * (B - n)]
          *
@@ -115,19 +114,17 @@ public class MathService {
         double xNext = 1.0 / (model.getPropCoeff() * (model.getNumberBug() - model.getNumberOfBugDetected()));
 
         model.setAverageTimeToBug(xNext);
-        return model;
     }
     /**
      * Рассчитывает время до окончания тестирования:
      * T = 1/K + Σ_{i=1}^{B-n} 1/i
      */
-    public static ModelLab2 TestingEndTimeCalc(ModelLab2 model) {
+    public static void TestingEndTimeCalc(ModelLab2 model) {
 
         double sum = 0.0;
         for (int i = 1; i <= model.getNumberBug() - model.getNumberOfBugDetected(); i++) {
             sum += 1.0 / i;
         }
         model.setTimeEndTesting(1 / model.getPropCoeff() * sum);
-        return model;
     }
 }
