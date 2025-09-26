@@ -33,10 +33,10 @@ public class Lab2Runner {
 
         //Вычисляем среднее время до появления ошибки
         MathService.AverageBugTimeCalc(model);
-        System.out.println("Среднее время до появления ошибки X(n+1) =  " +  Math.round(model.getAverageTimeToBug( )* 100) /100.0);
+        System.out.println("Среднее время до появления ошибки X(n+1) =  " +  Math.round(model.getAverageTimeToBug( )* 100) /100.0 + " часов");
 
         //Вычисляем время до окончания тестирования
         MathService.TestingEndTimeCalc(model);
-        System.out.println("Время до окончания тестирования t(k) = " + Math.round(model.getTimeEndTesting() * 100) /100.0);
+        System.out.println("Время до окончания тестирования t(k) = " + Math.round(model.getTimeEndTesting() * 100) /100.0 + " часов");
     }
 }
