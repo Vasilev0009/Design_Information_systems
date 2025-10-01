@@ -1,4 +1,4 @@
-package sam2;
+package lab5;
 
 //Главный класс для запуска
 public class Main {

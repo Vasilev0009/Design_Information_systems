@@ -1,4 +1,4 @@
-package sam2;
+package lab5;
 
 // Класс для расчётов метрик
 public class Metrics {
