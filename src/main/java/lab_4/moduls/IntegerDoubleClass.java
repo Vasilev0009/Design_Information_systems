@@ -30,7 +30,7 @@ public class IntegerDoubleClass {
         }
     }
 
-    public static double getVal(int idx) {
+    public static double getValue(int idx) {
         try
         {
             return (idx < 0 || idx >= vals.length) ? null : vals[idx];
