@@ -1,4 +1,4 @@
-package Lab3;
+package lab_3;
 
 /**
  * Класс для вычисления метрик Холстеда - Задание 1
@@ -13,10 +13,10 @@ public class MethodsTask1 {
      * Вычисляет число независимых параметров (n2*)
      * Формула: n2* = targets × measurements × trackedParams + targets × calcParams
      *
-     * @param targets количество целей
-     * @param measurements количество измерений
+     * @param targets       количество целей
+     * @param measurements  количество измерений
      * @param trackedParams количество отслеживаемых параметров
-     * @param calcParams количество вычисляемых параметров
+     * @param calcParams    количество вычисляемых параметров
      * @return число независимых параметров n2*
      */
     public double calculateIndependentParameters(double targets, double measurements,
@@ -54,7 +54,7 @@ public class MethodsTask1 {
      * Формула: B* = V² / (3000 × λ)
      *
      * @param potentialVolume потенциальный объем программы V*
-     * @param lambda параметр λ (лямбда)
+     * @param lambda          параметр λ (лямбда)
      * @return потенциальное число ошибок B*
      * @throws IllegalArgumentException если potentialVolume отрицательное или lambda не положительное
      */
@@ -86,73 +86,5 @@ public class MethodsTask1 {
                             parameterName, value)
             );
         }
-    }
-
-    /**
-     * Комплексный расчет всех метрик Задания 1
-     *
-     * @param targets количество целей
-     * @param measurements количество измерений
-     * @param trackedParams количество отслеживаемых параметров
-     * @param calcParams количество вычисляемых параметров
-     * @param lambda параметр λ (лямбда)
-     * @return объект с результатами всех вычислений
-     */
-    public Task1Result calculateAll(double targets, double measurements,
-                                    double trackedParams, double calcParams, double lambda) {
-        double n2 = calculateIndependentParameters(targets, measurements, trackedParams, calcParams);
-        double potentialVolume = calculatePotentialVolume(n2);
-        double potentialErrors = calculatePotentialErrors(potentialVolume, lambda);
-
-        return new Task1Result(n2, potentialVolume, potentialErrors);
-    }
-
-    /**
-     * Record для хранения результатов вычислений Задания 1
-     */
-    public static record Task1Result(
-            double independentParameters,
-            double potentialVolume,
-            double potentialErrors
-    ) {
-        /**
-         * @return округленное значение потенциального объема
-         */
-        public long getRoundedVolume() {
-            return Math.round(potentialVolume);
-        }
-
-        /**
-         * @return округленное значение потенциальных ошибок
-         */
-        public long getRoundedErrors() {
-            return Math.round(potentialErrors);
-        }
-    }
-
-    // Старые методы оставлены для обратной совместимости (если нужно)
-
-    /**
-     * @deprecated Используйте {@link #calculateIndependentParameters(double, double, double, double)}
-     */
-    @Deprecated
-    public double calcN2(double targets, double measurements, double trackedParams, double calcParams) {
-        return calculateIndependentParameters(targets, measurements, trackedParams, calcParams);
-    }
-
-    /**
-     * @deprecated Используйте {@link #calculatePotentialVolume(double)}
-     */
-    @Deprecated
-    public double calcPotentialVolume(double n2) {
-        return calculatePotentialVolume(n2);
-    }
-
-    /**
-     * @deprecated Используйте {@link #calculatePotentialErrors(double, double)}
-     */
-    @Deprecated
-    public double calcPotentialErrors(double V, double lambda) {
-        return calculatePotentialErrors(V, lambda);
     }
 }
