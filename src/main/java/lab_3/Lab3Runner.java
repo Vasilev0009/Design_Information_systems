@@ -1,26 +1,17 @@
-package Lab3;
+package lab_3;
 
 import java.util.ArrayList;
 
-public class Main {
-    private static final String DATA_FILE = "Data.txt";
+public class Lab3Runner {
+    private static final String DATA_FILE = "src/main/resources/Data.txt";
 
     private final MethodsTask1 task1 = new MethodsTask1();
     private final MethodsTask2 task2 = new MethodsTask2();
     private final MethodsTask3 task3 = new MethodsTask3();
     private static final ReadData readData = new ReadData();
 
-    public static void main(String[] args) {
-        System.out.println("Текущая рабочая директория: " + System.getProperty("user.dir"));
-
-        String dataFile = "Data.txt";
-        ArrayList<String> lines = readData.fileLineReader(dataFile);
-        new Main().run();
-    }
-
     public void run() {
-        String dataFile = "src/main/java/Lab3/Data.txt";
-        ArrayList<String> lines = readData.fileLineReader(dataFile);
+
         InputData inputData = readInputData();
         printHeader();
 
@@ -32,7 +23,7 @@ public class Main {
     }
 
     private InputData readInputData() {
-        ArrayList<String> lines = (ArrayList<String>) readData.fileLineReader(DATA_FILE);
+        ArrayList<String> lines = readData.fileLineReader(DATA_FILE);
 
         return new InputData(
                 readData.stringToDoubleArray(lines, 0)[0], // targets
@@ -51,9 +42,9 @@ public class Main {
     }
 
     private Task1Result executeTask1(InputData data) {
-        double n2 = task1.calcN2(data.targets(), data.measurements(), data.trackedParams(), data.calcParams());
-        double potentialVolume = task1.calcPotentialVolume(n2);
-        double potentialErrors = task1.calcPotentialErrors(potentialVolume, data.lambda());
+        double n2 = task1.calculateIndependentParameters(data.targets(), data.measurements(), data.trackedParams(), data.calcParams());
+        double potentialVolume = task1.calculatePotentialVolume(n2);
+        double potentialErrors = task1.calculatePotentialErrors(potentialVolume, data.lambda());
 
         printTask1Results(n2, potentialVolume, potentialErrors);
 
@@ -61,14 +52,14 @@ public class Main {
     }
 
     private Task2Result executeTask2(InputData data, double n2) {
-        double k = task2.calcKbasic(n2);
-        double K = task2.calcK(n2);
-        double N = task2.calcN(K);
-        double V = task2.calcV(K);
-        double P = task2.calcP(N);
-        double TkDays = task2.calcTkDays(N, data.m(), data.v());
-        double B = task2.safeCalcB(V);
-        double tnHours = task2.calcTnHours(TkDays, data.workDayHours(), B);
+        double k = task2.calculateBaseModules(n2);
+        double K = task2.calculateHierarchicalModules(n2);
+        double N = task2.calculateProgramLength(K);
+        double V = task2.calculateProgramVolume(K);
+        double P = task2.calculateAssemblyCommands(N);
+        double TkDays = task2.calculateDevelopmentTimeDays(N, data.m(), data.v());
+        double B = task2.calculatePotentialErrorsSafe(V);
+        double tnHours = task2.calculateInitialReliabilityHours(TkDays, data.workDayHours(), B);
 
         printTask2Results(k, K, N, V, P, TkDays, data.m(), data.v(), B, tnHours);
 

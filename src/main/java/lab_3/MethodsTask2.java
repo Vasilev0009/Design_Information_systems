@@ -1,4 +1,4 @@
-package Lab3;
+package lab_3;
 
 /**
  * Класс для вычисления метрик Холстеда - Задание 2
@@ -161,32 +161,6 @@ public class MethodsTask2 {
         return totalHours / (RELIABILITY_DIVISOR * logErrors);
     }
 
-    /**
-     * Комплексный расчет всех метрик Задания 2
-     *
-     * @param independentParameters число независимых параметров n2*
-     * @param m количество программистов
-     * @param v производительность (строк/день)
-     * @param workDayHours рабочих часов в день
-     * @return объект с результатами всех вычислений
-     */
-    public Task2Result calculateAll(double independentParameters, int m, int v, double workDayHours) {
-        double baseModules = calculateBaseModules(independentParameters);
-        double hierarchicalModules = calculateHierarchicalModules(independentParameters);
-        double programLength = calculateProgramLength(hierarchicalModules);
-        double programVolume = calculateProgramVolume(hierarchicalModules);
-        double assemblyCommands = calculateAssemblyCommands(programLength);
-        double developmentTimeDays = calculateDevelopmentTimeDays(programLength, m, v);
-        double potentialErrors = calculatePotentialErrorsSafe(programVolume);
-        double initialReliability = calculateInitialReliabilityHours(
-                developmentTimeDays, workDayHours, potentialErrors);
-
-        return new Task2Result(
-                baseModules, hierarchicalModules, programLength, programVolume,
-                assemblyCommands, developmentTimeDays, potentialErrors, initialReliability
-        );
-    }
-
     // Вспомогательные методы валидации
 
     private void validatePositive(double value, String parameterName) {
@@ -214,96 +188,5 @@ public class MethodsTask2 {
                             parameterName, value)
             );
         }
-    }
-
-    /**
-     * Record для хранения результатов вычислений Задания 2
-     */
-    public static record Task2Result(
-            double baseModules,
-            double hierarchicalModules,
-            double programLength,
-            double programVolume,
-            double assemblyCommands,
-            double developmentTimeDays,
-            double potentialErrors,
-            double initialReliabilityHours
-    ) {
-        /**
-         * @return true если надежность бесконечна (B ≤ 1)
-         */
-        public boolean isInfiniteReliability() {
-            return Double.isInfinite(initialReliabilityHours);
-        }
-
-        /**
-         * @return округленное количество команд ассемблера
-         */
-        public long getRoundedAssemblyCommands() {
-            return Math.round(assemblyCommands);
-        }
-
-        /**
-         * @return округленное время разработки в днях
-         */
-        public long getRoundedDevelopmentDays() {
-            return Math.round(developmentTimeDays);
-        }
-    }
-
-    // Методы для обратной совместимости
-
-    /** @deprecated Используйте {@link #calculateBaseModules(double)} */
-    @Deprecated
-    public double calcKbasic(double n2) {
-        return calculateBaseModules(n2);
-    }
-
-    /** @deprecated Используйте {@link #calculateHierarchicalModules(double)} */
-    @Deprecated
-    public double calcK(double n2) {
-        return calculateHierarchicalModules(n2);
-    }
-
-    /** @deprecated Используйте {@link #calculateProgramLength(double)} */
-    @Deprecated
-    public double calcN(double K) {
-        return calculateProgramLength(K);
-    }
-
-    /** @deprecated Используйте {@link #calculateProgramVolume(double)} */
-    @Deprecated
-    public double calcV(double K) {
-        return calculateProgramVolume(K);
-    }
-
-    /** @deprecated Используйте {@link #calculateAssemblyCommands(double)} */
-    @Deprecated
-    public double calcP(double N) {
-        return calculateAssemblyCommands(N);
-    }
-
-    /** @deprecated Используйте {@link #calculateDevelopmentTimeDays(double, int, int)} */
-    @Deprecated
-    public double calcTkDays(double N, int m, int v) {
-        return calculateDevelopmentTimeDays(N, m, v);
-    }
-
-    /** @deprecated Используйте {@link #calculatePotentialErrors(double)} */
-    @Deprecated
-    public double calcB(double V) {
-        return calculatePotentialErrors(V);
-    }
-
-    /** @deprecated Используйте {@link #calculatePotentialErrorsSafe(double)} */
-    @Deprecated
-    public double safeCalcB(double V) {
-        return calculatePotentialErrorsSafe(V);
-    }
-
-    /** @deprecated Используйте {@link #calculateInitialReliabilityHours(double, double, double)} */
-    @Deprecated
-    public double calcTnHours(double TkDays, double workDayHours, double B) {
-        return calculateInitialReliabilityHours(TkDays, workDayHours, B);
     }
 }
