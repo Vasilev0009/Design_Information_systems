@@ -7,8 +7,7 @@ package lab_3;
 public class MethodsTask2 {
     // Константы для формул
     private static final double MODULE_DIVISOR = 8.0;
-    private static final double HIERARCHY_MULTIPLIER = 1.125;
-    private static final double HIERARCHY_THRESHOLD = 24.0; // 8 * 3
+    private static final double HIERARCHY_THRESHOLD = 80; // 8 * 3
     private static final double BASE_COMPLEXITY = 220.0;
     private static final double ASSEMBLY_COMMAND_RATIO = 3.0 / 8.0;
     private static final double DEVELOPMENT_TIME_RATIO = 3.0 / 8.0;
@@ -31,7 +30,7 @@ public class MethodsTask2 {
 
     /**
      * Вычисляет количество модулей с учетом иерархии
-     * Если k > 24, используется приближение K = 1.125 * k
+     * Если k >> 8, используется приближение K = 1.125 * k
      *
      * @param independentParameters число независимых параметров n2*
      * @return количество модулей с учетом иерархии K
@@ -40,7 +39,7 @@ public class MethodsTask2 {
         double baseModules = calculateBaseModules(independentParameters);
 
         if (baseModules > HIERARCHY_THRESHOLD) {
-            return HIERARCHY_MULTIPLIER * baseModules;
+            return baseModules + baseModules/8;
         } else {
             return baseModules;
         }

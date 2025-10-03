@@ -100,18 +100,18 @@ public class Lab3Runner {
                                    double TkDays, int m, int v, double B, double tnHours) {
         System.out.println("Задание 2:");
         System.out.printf("Число модулей (k) = %.3f%n", k);
-        System.out.printf("Число модулей с учётом иерархии (K) = %.3f%n", K);
-        System.out.printf("Длина программы (N) = %.3f%n", N);
-        System.out.printf("Объём ПО (V) = %.3f%n", V);
-        System.out.printf("Количество команд ассемблера (P) = %.3f%n", P);
-        System.out.printf("Календарное время программирования (Tk), дни = %.3f (при m=%d, v=%d)%n",
+        System.out.printf("Число модулей с учётом иерархии (K) = %.0f%n", K);
+        System.out.printf("Длина программы (N) = %.0f%n", N);
+        System.out.printf("Объём ПО (V) = %.0f%n", V);
+        System.out.printf("Количество команд ассемблера (P) = %.0f%n", P);
+        System.out.printf("Календарное время программирования (Tk), дни = %.0f (при m=%d, v=%d)%n",
                 TkDays, m, v);
-        System.out.printf("Потенциальное количество ошибок (B) = %.3f%n", B);
+        System.out.printf("Потенциальное количество ошибок (B) = %.0f%n", B);
 
         if (Double.isInfinite(tnHours)) {
             System.out.println("Начальная надёжность tн = бесконечность (B <= 1 или лог невалиден)");
         } else {
-            System.out.printf("Начальная надёжность tн = %.3f часов%n%n", tnHours);
+            System.out.printf("Начальная надёжность tн = %.2f часов%n%n", tnHours);
         }
     }
 
