@@ -4,11 +4,11 @@ package lab_5;
 public class Metrics {
     // Итоговая оценка
     public static double finalGrade(double qv, double qp) {
-        return (qv + qp) / 2.0;
+        return (qv + qp) / 2;
     }
     // Абсолютные показатели
-    public static double absoluteIndicator(double firstMetric, double secondMetric) {
-        return 0.5 * firstMetric + 0.5 * secondMetric;
+    public static double absoluteIndicator(double P, double overall) {
+        return (overall + P) / 2;
     }
     // Относительные показатели
     public static double relativeIndicator(double P_ij, double rho_ij) {
