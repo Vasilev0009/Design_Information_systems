@@ -1,8 +1,8 @@
-package lab5;
+package lab_5;
 
 //Главный класс для запуска
-public class Main {
-    public static void main(String[] args) {
+public class Lab5Runner {
+    public static void runner() {
         //Параметры
         int Q = 5;                  //количество зарегистрированных отказов
         int N = 1000;               //количество экспериментов

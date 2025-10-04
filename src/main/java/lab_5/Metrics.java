@@ -1,4 +1,4 @@
-package lab5;
+package lab_5;
 
 // Класс для расчётов метрик
 public class Metrics {
