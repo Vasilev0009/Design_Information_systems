@@ -1,6 +1,6 @@
 import lab_2.Lab2Runner;
-import java.util.Scanner;
 import lab_4.Lab4Runner;
+import lab_5.Lab5Runner;
 import lab_3.Lab3Runner;
 import java.util.Scanner;
 
@@ -28,6 +28,9 @@ public class Main {
                 break;
             case 4:
                 Lab4Runner.runner();
+                break;
+            case 5:
+                Lab5Runner.runner();
                 break;
             default:
                 System.out.println("Ошибка: введите от 2 до 5!");
