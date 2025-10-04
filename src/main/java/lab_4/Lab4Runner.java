@@ -8,7 +8,6 @@ import lab_4.moduls.LineBreakPrintfClass;
 public class Lab4Runner {
     public static void runner(){
 
-        /*
         IntegerDoubleClass.example1();
         System.out.println();
 
@@ -17,17 +16,15 @@ public class Lab4Runner {
 
         IntegerDoubleClass.getValue(-1);
         System.out.println();
-        */
 
-        //DateFormatClass.example();
+        DateFormatClass.example();
 
-        /*
         DecimalsClass.example1();
         System.out.println();
 
         DecimalsClass.example2();
         System.out.println();
-        */
+
 
         LineBreakPrintfClass.example();
     }

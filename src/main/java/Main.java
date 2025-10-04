@@ -1,9 +1,8 @@
 import lab_2.Lab2Runner;
-import java.util.Scanner;
 import lab_4.Lab4Runner;
-//import lab_3.Lab3Runner;
 import lab_5.Lab5Runner;
-
+import lab_3.Lab3Runner;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,8 +23,8 @@ public class Main {
                 Lab2Runner.runner();
                 break;
             case 3:
-               // Lab3Runner lab3Runner = new Lab3Runner();
-                // lab3Runner.run();
+                Lab3Runner lab3Runner = new Lab3Runner();
+                lab3Runner.run();
                 break;
             case 4:
                 Lab4Runner.runner();
