@@ -23,13 +23,14 @@ public class Lab5Runner {
         double Qp = Reliability.transformationDuration(tiLeft, tiRight, T_dop_i);
 
         double overall = Metrics.finalGrade(Qv, Qp);
-        double P_ij = Metrics.absoluteIndicator(Qv, Qp);
+        double P_ij = Metrics.absoluteIndicator(P, overall);
         double K_ij = Metrics.relativeIndicator(P_ij, rho);
         //Вывод результатов
         System.out.printf("Вероятность безотказной работы: %.6f%n", P);
         System.out.printf("Оценка по среднему времени восстановления: %.6f%n", Qv);
         System.out.printf("Оценка по продолжительности преобразования: %.6f%n", Qp);
-        System.out.printf("Итоговая оценка: %.6f%n", overall);
+        System.out.printf("Итоговая оценка вероятности безотказной работы: %.6f%n", P);
+        System.out.printf("Итоговая оценка по среднему времени восстановления и продолжительности преобразования: %.6f%n", overall);
         System.out.printf("Абсолютный показатель: %.6f%n", P_ij);
         System.out.printf("Относительный показатель: %.6f%n", K_ij);
         System.out.printf("Фактор надежности: %.6f%n", K_ij);
